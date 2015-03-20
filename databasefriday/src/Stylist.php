@@ -1,20 +1,20 @@
 <?php
         class Stylist
         {
-            private $name
-            private $id
-            private $client_id
+            private $name;
+            private $id;
+            private $client_id;
 
-            function __construct($name, $id = null, $client_id)
+            function __construct($name, $id = null)
             {
                 $this->name = $name;
                 $this->id = $id;
-                $this->client_id = $client_id;
+
             }
 
                 function setName($new_name)
                 {
-                    $this->name = $new_name;
+                    $this->name = (string) $new_name;
                 }
 
                 function getName()
@@ -42,9 +42,23 @@
                     return $this->client_id;
                 }
                 function save()
-                $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name, client_id) VALUES ('{$this->getName()}', {$this->getClientId()}) RETURNING id;");
+                {
+                $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name) VALUES ('{$this->getName()}') RETURNING id;");
                          $result = $statement->fetch(PDO::FETCH_ASSOC);
                          $this->setId($result['id']);
+                }
+
+                static function getAll()
+                {
+                    $returned_names = $GLOBALS['DB']->query("SELECT * FROM stylist;");
+                    $stylists = array();
+                    foreach($returned_names as $stylist) {
+                        $name = $sylist['name'];
+                        $new_stylist = new Stylist($name);
+                        array_push($stylists, $new_stylist);
+                    }
+                    return $stylists;
+                }
         }
 
 
