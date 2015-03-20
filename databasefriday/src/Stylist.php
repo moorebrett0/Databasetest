@@ -5,7 +5,7 @@
             private $id
             private $client_id
 
-            function __construct($name, $id, $client_id)
+            function __construct($name, $id = null, $client_id)
             {
                 $this->name = $name;
                 $this->id = $id;
@@ -24,7 +24,7 @@
 
                 function setId($new_id)
                 {
-                    $this->id = $new_id;
+                    $this->id = (int) $new_id;
                 }
 
                 function getId()
@@ -34,7 +34,7 @@
 
                 function setClientId($new_client_id)
                 {
-                    $this->client_id = $new_client_id;
+                    $this->client_id = (int) $new_client_id;
                 }
 
                 function getClientId()
