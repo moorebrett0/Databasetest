@@ -38,10 +38,10 @@
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             $this->setId($result['id']);
         }
-        function update($new_name)
+        function update($new_client)
         {
-            $GLOBALS['DB']->exec("UPDATE cuisines SET name = '{$new_name}' WHERE id = {$this->getId()};");
-            $this->setName($new_name);//make the object match the database.
+            $GLOBALS['DB']->exec("UPDATE client SET name = '{$new_client}' WHERE id = {$this->getId()};");
+            $this->setClient($new_client);
         }
 
             function delete()

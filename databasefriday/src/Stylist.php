@@ -3,9 +3,9 @@
         {
             private $name;
             private $id;
+            private $client_id;
 
-
-            function __construct($name, $id = null)
+            function __construct($name, $id = null, $client_id)
             {
                 $this->name = $name;
                 $this->id = $id;
@@ -83,6 +83,20 @@
                     }
                     return $found_stylist;
                 }
+
+                function findClients()
+                {
+                    $found_clients = array();
+                    $table_matches = $GLOBALS['DB']->query("SELECT * FROM client WHERE client_id = {$this->getId()};");
+                    foreach($table_matches as $row) {
+                        $name = $row['name'];
+                        $id = $row['id'];
+                        $cuisine_id = $row['client_id'];
+                        $new_clients = new Client($name, $id, $client_id);
+                        array_push($found_clients, $new_clients);
+                }
+                return $found_clients;
+                        }
         }
 
 

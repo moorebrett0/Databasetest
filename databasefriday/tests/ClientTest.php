@@ -126,6 +126,21 @@
             $this->assertEquals([$test_client2], Client::getAll());
         }
 
+        function test_update()
+        {
+            //Arrange
+            $client = "sarah";
+            $id = 1;
+            $test_client = new Client($client, $id);
+            $test_client->save();
+            $new_client = "connie";
+
+            //Act
+            $test_client->update($new_client);
+
+            //assert
+            $this->assertEquals("connie", $test_client->getClient());
+        }
     }
 
 
