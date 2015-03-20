@@ -6,6 +6,7 @@
     */
 
     require_once "src/Client.php";
+    require_once "src/Stylist.php";
 
     $DB = new PDO('pgsql:host=localhost;dbname=hair_salon_test');
 
@@ -140,6 +141,31 @@
 
             //assert
             $this->assertEquals("connie", $test_client->getClient());
+        }
+
+        function testGetTasks()
+        {
+            //Arrange
+            $client = "oo";
+            $id = null;
+            $test_client = new Client($client, $id);
+            $test_client->save();
+
+            $test_client_id = $test_client->getId();
+
+            $description = "aa";
+            $test_stylist = new Stylist($description, $id, $test_client_id);
+            $test_stylist->save();
+
+            $description2 = "cc";
+            $test_stylist2 = new Stylist($description2, $id, $test_client_id);
+            $test_stylist2->save();
+
+            //Act
+            $result = $test_client->getStylists();
+
+            //Assert
+            $this->assertEquals([$test_stylist, $test_stylist2], $result);
         }
     }
 

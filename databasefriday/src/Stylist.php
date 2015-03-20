@@ -9,6 +9,8 @@
             {
                 $this->name = $name;
                 $this->id = $id;
+                $this->client_id = $client_id;
+
 
             }
 
@@ -43,7 +45,7 @@
                 }
                 function save()
                 {
-                    $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name) VALUES ('{$this->getName()}') RETURNING id;");
+                    $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name, client_id) VALUES ('{$this->getName()}', {$this->getClientId()}) RETURNING id;");
                     $result = $statement->fetch(PDO::FETCH_ASSOC);
                     $this->setId($result['id']);
                 }
@@ -60,7 +62,8 @@
                     foreach($all_stylists as $stylist) {
                         $name = $stylist['name'];
                         $id = $stylist['id'];
-                        $new_stylist = new Stylist($name, $id);
+                        $client_id = $stylist['client_id'];
+                        $new_stylist = new Stylist($name, $id, $client_id);
                         array_push($stylists_to_return, $new_stylist);
                     }
                     return $stylists_to_return;
@@ -87,7 +90,7 @@
                 function findClients()
                 {
                     $found_clients = array();
-                    $table_matches = $GLOBALS['DB']->query("SELECT * FROM client WHERE client_id = {$this->getId()};");
+                    $table_matches = $GLOBALS['DB']->query("SELECT * FROM stylist WHERE client_id = {$this->getId()};");
                     foreach($table_matches as $row) {
                         $name = $row['name'];
                         $id = $row['id'];
