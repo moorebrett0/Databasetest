@@ -34,14 +34,13 @@
     });
 
     $app->post("/stylists", function() use ($app) {
-        $name = new Stylist($_POST['name']);
-        $id = new Stylist($_POST['id']);
-        $client_id = new Stylist($_POST['client_id']);
-        $stylist = new Stylist($name, $id, $client_id);
-        $stylist->save();
-        $clients = Client::find($client_id);
+        $stylists = new Stylist($_POST['name'], $_POST['client_id']);
 
-        return $app['twig']->render('stylists.twig', array('clients' => $clients, 'stylists' => Stylist::getAll()));
+
+        $stylists->save();
+
+
+        return $app['twig']->render('stylists.twig', array('stylists' => $stylists->getName()));
     });
 
     $app->post("/delete_stylist", function() use ($app) {

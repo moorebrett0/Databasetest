@@ -57,16 +57,16 @@
 
                 static function getAll()
                 {
-                    $all_stylists = $GLOBALS['DB']->query("SELECT * FROM stylist;");
-                    $stylists_to_return = array();
-                    foreach($stylists_to_return as $stylist) {
+                    $returned_stylists = $GLOBALS['DB']->query("SELECT * FROM stylist;");
+                    $stylists = array();
+                    foreach($returned_stylists as $stylist) {
                         $name = $stylist['name'];
                         $id = $stylist['id'];
                         $client_id = $stylist['client_id'];
                         $new_stylist = new Stylist($name, $id, $client_id);
                         array_push($stylists_to_return, $new_stylist);
                     }
-                    return $stylists_to_return;
+                    return $stylists;
                 }
 
                 static function deleteAll()
