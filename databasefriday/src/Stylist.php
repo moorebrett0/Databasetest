@@ -41,7 +41,10 @@
                 {
                     return $this->client_id;
                 }
-
+                function save()
+                $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name, client_id) VALUES ('{$this->getName()}', {$this->getClientId()}) RETURNING id;");
+                         $result = $statement->fetch(PDO::FETCH_ASSOC);
+                         $this->setId($result['id']);
         }
 
 
