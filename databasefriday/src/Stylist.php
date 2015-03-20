@@ -3,7 +3,7 @@
         {
             private $name;
             private $id;
-            private $client_id;
+
 
             function __construct($name, $id = null)
             {
@@ -43,21 +43,45 @@
                 }
                 function save()
                 {
-                $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name) VALUES ('{$this->getName()}') RETURNING id;");
-                         $result = $statement->fetch(PDO::FETCH_ASSOC);
-                         $this->setId($result['id']);
+                    $statement = $GLOBALS['DB']->query("INSERT INTO stylist (name) VALUES ('{$this->getName()}') RETURNING id;");
+                    $result = $statement->fetch(PDO::FETCH_ASSOC);
+                    $this->setId($result['id']);
+                }
+
+                function delete()
+                {
+            $GLOBALS['DB']->exec("DELETE FROM stylist WHERE id = {$this->getId()};");
                 }
 
                 static function getAll()
                 {
-                    $returned_names = $GLOBALS['DB']->query("SELECT * FROM stylist;");
-                    $stylists = array();
-                    foreach($returned_names as $stylist) {
-                        $name = $sylist['name'];
-                        $new_stylist = new Stylist($name);
-                        array_push($stylists, $new_stylist);
+                    $all_stylists = $GLOBALS['DB']->query("SELECT * FROM stylist;");
+                    $stylists_to_return = array();
+                    foreach($all_stylists as $stylist) {
+                        $name = $stylist['name'];
+                        $id = $stylist['id'];
+                        $new_stylist = new Stylist($name, $id);
+                        array_push($stylists_to_return, $new_stylist);
                     }
-                    return $stylists;
+                    return $stylists_to_return;
+                }
+
+                static function deleteAll()
+                {
+                    $GLOBALS['DB']->exec("DELETE FROM stylist *;");
+                }
+
+                static function find($search_id)
+                {
+                    $found_stylist = null;
+                    $stylists = Stylist::getAll();
+                    foreach($stylists as $stylist) {
+                        $stylist_id = $stylist->getId();
+                        if ($stylist_id == $search_id) {
+                            $found_stylist = $stylist;
+                        }
+                    }
+                    return $found_stylist;
                 }
         }
 
