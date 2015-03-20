@@ -115,7 +115,7 @@
             $test_Stylist = new Stylist($name, $id, $client_id);
             $test_Stylist->save();
 
-            $name2 = "connie";
+            $name2 = "elaine";
             $test_Stylist2 = new Stylist($name2, $id, $client_id);
             $test_Stylist2->save();
 
