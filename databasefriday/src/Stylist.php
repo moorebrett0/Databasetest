@@ -59,7 +59,7 @@
                 {
                     $all_stylists = $GLOBALS['DB']->query("SELECT * FROM stylist;");
                     $stylists_to_return = array();
-                    foreach($all_stylists as $stylist) {
+                    foreach($stylists_to_return as $stylist) {
                         $name = $stylist['name'];
                         $id = $stylist['id'];
                         $client_id = $stylist['client_id'];

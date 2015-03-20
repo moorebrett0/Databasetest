@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Salon</title>
+</head>
+<body>
+    <h1>Clients</h1>
+
+    {% if clients is not empty %}
+        <p>Here are all your clients:</p>
+        <ul>
+            {% for client in clients %}
+                <li>{{ client.getClient }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action='/clients' method='post'>
+        <label for='clients'>Clients name</label>
+        <input id='clients' name='clients' type='text'>
+
+        <button type='submit'>Add Yourself</button>
+    </form>
+    <form action='/delete_clients' method='post'>
+        <button type='submit'>Clear</button>
+    </form>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>
